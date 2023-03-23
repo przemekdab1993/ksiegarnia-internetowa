@@ -1,0 +1,41 @@
+.top-menu {
+    text-align: center;
+    background: linear-gradient(to top, #3333ff 0%, #8080ff 100%);
+}
+ul.top-menu-list {
+    margin: 0px;
+    padding: 0px;
+}
+ul.top-menu-list li.top-menu-item {
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+    border-left: 1px solid #fff;
+}
+ul.top-menu-list li.top-menu-item:first-of-type {
+    border-left: none;
+}
+ul.top-menu-list li.top-menu-item a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 12px 42px;
+    transition: color 1s;
+    font-size: 22px;
+    text-shadow: 2px 1px 2px #000;
+}
+ul.top-menu-list li.top-menu-item a:hover {
+    color: #ff8533;
+    background: linear-gradient(to top, #2222ee 0%, #7070ee 100%);
+}
+
+.user-order-count {
+    background-color: #fff;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #ff8533;
+    color: #ff8533;
+    margin-left: 5px;
+    text-shadow: none;
+    font-weight: 600;
+}

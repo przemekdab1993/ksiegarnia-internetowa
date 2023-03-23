@@ -1,0 +1,14 @@
+.order-cart {
+    position: fixed;
+    top: 15vh;
+    left: 30%;
+    width: 40%;
+    z-index: 101;
+    box-sizing: border-box;
+    background: #FFF;
+    display: block;
+    max-height: 70vh;
+    overflow: auto;
+    padding: 20px;
+    border: 2px solid #3333ff;
+}
