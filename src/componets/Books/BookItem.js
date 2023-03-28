@@ -12,6 +12,8 @@ const BookItem = (props) => {
     event.preventDefault();
     const productId = event.target.dataset.productId;
 
+    console.log("e");
+
     authCtx.onAddProduct({type:"ADD_PRODUCT", productId: productId});
   }
 
