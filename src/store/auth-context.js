@@ -1,20 +1,100 @@
-import React, {useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 
 const AuthContext = React.createContext({
   userName: 'unset',
   userEmail: 'unset',
   isLoggedIn: false,
-  userOrder: [],
-  onLogin:() => {},
-  onLogout:() => {}
+  userOrder: {orderList: [], status: 'NEW'},
+  onAddProduct: () => {},
+  onClearOrder: () => {},
+  onSendOrder: () => {},
+  onLogin: () => {},
+  onLogout: () => {}
 });
+
+const userOrderReducer = (state, action) => {
+
+  if (action.type === 'ADD_PRODUCT') {
+
+    if (action.productId !== undefined) {
+
+      const isSetProductOrder = state.orderList.findIndex((item) => {
+        return item.productId === action.productId;
+      });
+
+
+      if (isSetProductOrder > -1) {
+        state.orderList[isSetProductOrder].amount += 1;
+
+        return (
+          {
+            orderList: [...state.orderList],
+            status: 'ADD_PRODUCT_AMOUNT'
+          }
+        );
+      }
+      else {
+        return (
+          {
+            orderList: [...state.orderList, {productId: action.productId, amount: 1}],
+            status: 'ADD_PRODUCT'
+          }
+        );
+      }
+    }
+
+  }
+  if (action.type === 'CLEAR_ORDER') {
+
+    return {
+      orderList: [],
+      status: 'ORDER_CLEARED'
+    };
+  }
+
+  if (action.type === 'ADD_ORDER_LIST') {
+    let orderList = [];
+
+    if(action.value) {
+      orderList = action.value;
+    }
+
+    return { orderList: orderList, status: 'ORDER_CLEARED'};
+  }
+
+  if (action.type === 'SEND_ORDER') {
+
+    return {
+        orderList: [],
+        status: 'ORDER_SENT'
+      };
+  }
+
+  return {
+      orderList: [],
+      status: 'state.status'
+    };
+}
 
 export const AuthContextProvider = (props) => {
 
   const [userData, setUserData] = useState({userName: 'unset', userEmail: 'unset'});
   const [isLoggedIn, setIsLogIn] = useState(false);
-  const [userOrder, setUserOrder] = useState([]);
+  const [userOrder, dispatchOrder] = useReducer(userOrderReducer, {orderList: [], status: "NEW"}, undefined);
 
+  useEffect(() => {
+    const localStorageUserOrder = localStorage.getItem('userOrder');
+
+    console.log(localStorageUserOrder);
+
+    if (localStorageUserOrder) {
+      dispatchOrder({type: 'ADD_ORDER_LIST', value: JSON.parse(localStorageUserOrder)});
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('userOrder', JSON.stringify(userOrder.orderList));
+  }, [userOrder]);
 
   const loginChandler = () => {
 
@@ -24,6 +104,19 @@ export const AuthContextProvider = (props) => {
 
   }
 
+  const addProductChandler = (action) => {
+    dispatchOrder(action);
+  }
+
+  const clearOrderChandler = () => {
+    dispatchOrder({type: 'CLEAR_ORDER'});
+  }
+
+  const sendOrderChandler = () => {
+    dispatchOrder({type: 'ORDER_SENT'});
+  }
+
+
   return (
     <AuthContext.Provider
       value={{
@@ -31,6 +124,9 @@ export const AuthContextProvider = (props) => {
         userEmail: userData.userEmail,
         isLoggedIn: isLoggedIn,
         userOrder: userOrder,
+        onAddProduct: addProductChandler,
+        onClearOrder: clearOrderChandler,
+        onSendOrder: sendOrderChandler,
         onLogin: loginChandler,
         onLogout: logoutChandler
       }}

@@ -5,6 +5,7 @@ import styles from "./Modal.module.css";
 
 import Backdrop from "./Backdrop";
 import OrderCart from "../../Order/OrderCart";
+import {BooksContextProvider} from "../../../store/books-context";
 
 const Modal = (props) => {
 
@@ -15,7 +16,11 @@ const Modal = (props) => {
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(
-        (<OrderCart></OrderCart>),
+        (
+          <BooksContextProvider>
+            <OrderCart onHidden={props.onHidden}></OrderCart>
+          </BooksContextProvider>
+        ),
         document.getElementById('overlay-root')
       )}
     </React.Fragment>

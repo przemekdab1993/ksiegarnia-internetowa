@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./HeaderSection.module.css";
 
 import Menu from "./Menu";
-import Modal from "../Modal/Modal";
 
 const HeaderSection = () => {
     return (

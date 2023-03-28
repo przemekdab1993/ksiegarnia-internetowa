@@ -25,7 +25,7 @@ const Menu = (props) => {
       <nav className={styles["top-menu"]}>
         <ul className={styles["top-menu-list"]}>
           <li className={styles["top-menu-item"]}><a href="#">Home</a></li>
-          <li className={styles["top-menu-item"]}><a href="#" onClick={showOrderModalHandler}>Your Order <span className={styles["user-order-count"]}>{authCtx.userOrder.length}</span></a></li>
+          <li className={styles["top-menu-item"]}><a href="#" onClick={showOrderModalHandler}>Your Order <span className={styles["user-order-count"]}>{authCtx.userOrder.orderList.length}</span></a></li>
           {authCtx.isLoggedIn && (
             <li className={styles["top-menu-item"]}><a href="#">Collection</a></li>
           )}
