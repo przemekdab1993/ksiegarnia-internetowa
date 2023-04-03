@@ -63,7 +63,7 @@ const BookItem = (props) => {
             ref={amountInputRef}
             className={styles["book-box-amount-input"]}
             onChange={amountManualChangeChandler}
-            name={`amount-${props.id}`}
+            name={`amount_${props.id}`}
             type="number"
             min="1"
             max={props.quantity}

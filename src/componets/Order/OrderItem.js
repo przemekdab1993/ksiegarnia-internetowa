@@ -50,7 +50,7 @@ const OrderItem = (props) => {
                 <button className={styles['amount-button']} onClick={amountChangeChandler} data-set="down" type="button">-</button>
                 <input className={styles['amount-input']}
                    onChange={amountManualChangeChandler}
-                   name={`cartAmount${props.productId}`}
+                   name={`cart_amount_${props.productId}`}
                    type="number"
                    value={enteredAmountProduct}
                    data-product-id={props.productId}
