@@ -20,6 +20,7 @@ const BooksList = (props) => {
               id={book.id}
               title={book.title}
               price={book.price}
+              quantity={book.quantity}
             >
             </BookItem>);
           }

@@ -13,7 +13,7 @@ const BookItem = (props) => {
   const amountChangeChandler = (event) => {
     const changeType = event.target.dataset.set;
 
-    if (changeType === "up") {
+    if (changeType === "up" && amountProduct < props.quantity) {
       setAmountProduct(prevState => {
         return prevState + 1;
       });
@@ -63,8 +63,10 @@ const BookItem = (props) => {
             ref={amountInputRef}
             className={styles["book-box-amount-input"]}
             onChange={amountManualChangeChandler}
-            name="amount"
+            name={`amount-${props.id}`}
             type="number"
+            min="1"
+            max={props.quantity}
             step="1"
             value={amountProduct}
           />

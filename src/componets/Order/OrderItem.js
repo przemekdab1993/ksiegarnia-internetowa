@@ -49,10 +49,11 @@ const OrderItem = (props) => {
             <div className={styles['product-amount']}>
                 <button className={styles['amount-button']} onClick={amountChangeChandler} data-set="down" type="button">-</button>
                 <input className={styles['amount-input']}
-                    onChange={amountManualChangeChandler}
-                    type="number"
-                    value={enteredAmountProduct}
-                    data-product-id={props.productId}
+                   onChange={amountManualChangeChandler}
+                   name={`cartAmount${props.productId}`}
+                   type="number"
+                   value={enteredAmountProduct}
+                   data-product-id={props.productId}
                 />
                 <button className={styles['amount-button']} onClick={amountChangeChandler} data-set="up" type="button">+</button>
                 <span> x {props.price.toFixed(2)}$</span>
