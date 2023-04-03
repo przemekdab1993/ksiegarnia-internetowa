@@ -16,7 +16,7 @@ const userOrderReducer = (state, action) => {
 
   if (action.type === 'ADD_PRODUCT') {
 
-    if (action.productId !== undefined) {
+    if (action.productId !== undefined && action.amount > 0 ) {
 
       const isSetProductOrder = state.orderList.findIndex((item) => {
         return item.productId === action.productId;
@@ -24,7 +24,7 @@ const userOrderReducer = (state, action) => {
 
 
       if (isSetProductOrder > -1) {
-        state.orderList[isSetProductOrder].amount += 1;
+        state.orderList[isSetProductOrder].amount += action.amount;
 
         return (
           {
@@ -36,7 +36,7 @@ const userOrderReducer = (state, action) => {
       else {
         return (
           {
-            orderList: [...state.orderList, {productId: action.productId, amount: 1}],
+            orderList: [...state.orderList, {productId: action.productId, amount: action.amount}],
             status: 'ADD_PRODUCT'
           }
         );
@@ -44,6 +44,31 @@ const userOrderReducer = (state, action) => {
     }
 
   }
+
+  if (action.type === 'CHANGE_AMOUNT') {
+
+    const isSetProductOrder = state.orderList.findIndex((item) => {
+      return item.productId === action.productId;
+    });
+
+    if (isSetProductOrder > -1) {
+      state.orderList[isSetProductOrder].amount = +action.value;
+
+      return (
+        {
+          orderList: [...state.orderList],
+          status: 'ADD_PRODUCT_AMOUNT'
+        }
+      );
+    }
+    return (
+      {
+        orderList: [...state.orderList],
+        status: 'CHANGE_PRODUCT_AMOUNT'
+      }
+    );
+  }
+
   if (action.type === 'CLEAR_ORDER') {
 
     return {
@@ -72,7 +97,7 @@ const userOrderReducer = (state, action) => {
 
   return {
       orderList: [],
-      status: 'state.status'
+      status: state.status
     };
 }
 
@@ -85,16 +110,22 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const localStorageUserOrder = localStorage.getItem('userOrder');
 
-    console.log(localStorageUserOrder);
-
     if (localStorageUserOrder) {
       dispatchOrder({type: 'ADD_ORDER_LIST', value: JSON.parse(localStorageUserOrder)});
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('userOrder', JSON.stringify(userOrder.orderList));
+    const addToLocalStorage = setTimeout( () => {
+      localStorage.setItem('userOrder', JSON.stringify(userOrder.orderList));
+    },500);
+
+    return () => {
+      clearTimeout(addToLocalStorage);
+    }
   }, [userOrder]);
+
+
 
   const loginChandler = () => {
 
@@ -107,13 +138,16 @@ export const AuthContextProvider = (props) => {
   const addProductChandler = (action) => {
     dispatchOrder(action);
   }
+  const changeOrderChandler = (action) => {
+    dispatchOrder(action);
+  }
 
   const clearOrderChandler = () => {
     dispatchOrder({type: 'CLEAR_ORDER'});
   }
 
   const sendOrderChandler = () => {
-    dispatchOrder({type: 'ORDER_SENT'});
+    dispatchOrder({type: 'SEND_ORDER'});
   }
 
 
@@ -125,6 +159,7 @@ export const AuthContextProvider = (props) => {
         isLoggedIn: isLoggedIn,
         userOrder: userOrder,
         onAddProduct: addProductChandler,
+        onChangeOrder: changeOrderChandler,
         onClearOrder: clearOrderChandler,
         onSendOrder: sendOrderChandler,
         onLogin: loginChandler,

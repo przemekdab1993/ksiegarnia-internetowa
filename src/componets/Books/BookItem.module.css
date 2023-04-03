@@ -47,15 +47,42 @@
     width: 100%;
 }
 .book-box-button {
-    width: 48.5%;
+    width: 100px;
+    height: 28px;
     background: linear-gradient(to top, #3333ff 0%, #8080ff 100%);
     margin: 0px;
     border: none;
     color: #fff;
     cursor: pointer;
     transition: color ease-in-out 1s;
+    border-radius: 4px;
 }
 .book-box-button:hover
+{
+    color: #ff8533;
+    background: linear-gradient(to top, #1111dd 0%, #6060dd 100%);
+}
+.book-box-amount-input {
+    width: 40px;
+    height: 28px;
+    text-align: center;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+.book-box-amount-button {
+    background: linear-gradient(to top, #3333ff 0%, #8080ff 100%);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: color ease-in-out 1s;
+    padding: 6px 6px;
+    width: 24px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin: 0px 10px;
+}
+.book-box-amount-button:hover
 {
     color: #ff8533;
     background: linear-gradient(to top, #1111dd 0%, #6060dd 100%);

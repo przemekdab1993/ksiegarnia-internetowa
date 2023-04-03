@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useRef, useState} from "react";
 
 import styles from "./BookItem.module.css";
 
@@ -6,15 +6,39 @@ import Card from "../UserInterface/Card";
 import AuthContext from "../../store/auth-context";
 
 const BookItem = (props) => {
+  const [amountProduct, setAmountProduct] = useState(1);
   const authCtx = useContext(AuthContext);
+  const amountInputRef = useRef();
+
+  const amountChangeChandler = (event) => {
+    const changeType = event.target.dataset.set;
+
+    if (changeType === "up") {
+      setAmountProduct(prevState => {
+        return prevState + 1;
+      });
+    }
+    else if (changeType === "down" && amountProduct > 1) {
+      setAmountProduct(prevState => {
+        return prevState - 1;
+      });
+    }
+  }
+  const amountManualChangeChandler = (event) => {
+    const value = event.target.value;
+
+    setAmountProduct(prevState => {
+      return +value;
+    })
+  }
+
 
   const addProductOrderChandler = (event) => {
     event.preventDefault();
     const productId = event.target.dataset.productId;
 
-    console.log("e");
-
-    authCtx.onAddProduct({type:"ADD_PRODUCT", productId: productId});
+    authCtx.onAddProduct({type:"ADD_PRODUCT", productId: productId, amount: amountProduct});
+    setAmountProduct(1);
   }
 
   return (
@@ -25,16 +49,37 @@ const BookItem = (props) => {
       </div>
       <h3>{props.title}</h3>
       <div className="book-options">
-        <a href="#">
-          <button className={`${styles["book-box-button"]} ${styles["button-info"]}`}>Show more</button>
-        </a>
-        <a href="#">
+        {/*<a href="#">*/}
+        {/*  <button className={`${styles["book-box-button"]} ${styles["button-info"]}`}>Show more</button>*/}
+        {/*</a>*/}
+        <form>
+          <button
+              className={styles["book-box-amount-button"]}
+              onClick={amountChangeChandler}
+              data-set="down"
+              type="button"
+          >-</button>
+          <input
+            ref={amountInputRef}
+            className={styles["book-box-amount-input"]}
+            onChange={amountManualChangeChandler}
+            name="amount"
+            type="number"
+            step="1"
+            value={amountProduct}
+          />
+          <button
+              className={styles["book-box-amount-button"]}
+              onClick={amountChangeChandler}
+              data-set="up"
+              type="button"
+          >+</button>
           <button
             className={`${styles["book-box-button"]} ${styles["button-add"]}`}
             onClick={addProductOrderChandler}
             data-product-id={props.id}
           >Add</button>
-        </a>
+        </form>
       </div>
     </Card>
   );

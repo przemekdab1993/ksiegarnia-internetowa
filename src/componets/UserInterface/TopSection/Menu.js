@@ -22,7 +22,7 @@ const Menu = (props) => {
         setOrderItemsCount(0);
       }
       else {
-        setOrderItemsCount( tempCount.reduce((prev, curr) => prev + curr) );
+        setOrderItemsCount( tempCount.reduce((prev, curr) => parseInt(prev + curr)) );
       }
 
     }, 800);
