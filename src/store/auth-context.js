@@ -22,13 +22,22 @@ const userOrderReducer = (state, action) => {
         return item.productId === action.productId;
       });
 
-
       if (isSetProductOrder > -1) {
-        state.orderList[isSetProductOrder].amount += action.amount;
+          let updatedItem;
+          let updatedItems;
+
+          const existingItem = state.orderList[isSetProductOrder];
+
+          updatedItem = {
+              ...existingItem,
+              amount: existingItem.amount + action.amount
+          }
+          updatedItems = [...state.orderList];
+          updatedItems[isSetProductOrder] = updatedItem;
 
         return (
           {
-            orderList: [...state.orderList],
+            orderList: updatedItems,
             status: 'ADD_PRODUCT_AMOUNT'
           }
         );
@@ -52,19 +61,40 @@ const userOrderReducer = (state, action) => {
     });
 
     if (isSetProductOrder > -1) {
-      state.orderList[isSetProductOrder].amount = +action.value;
+
+        const productOrder = state.orderList[isSetProductOrder];
+        let updatedItems;
+        let statusAction;
+
+        if (action.amount > 0) {
+            let updatedItem = {
+                ...productOrder,
+                amount: +action.amount
+            }
+
+            updatedItems = [...state.orderList];
+            updatedItems[isSetProductOrder] = updatedItem;
+
+            statusAction = 'PRODUCT_AMOUNT_CHANGE';
+        }
+        else {
+            updatedItems = [...state.orderList];
+            updatedItems.splice(isSetProductOrder, 1);
+
+            statusAction = 'PRODUCT_REMOVE';
+        }
 
       return (
         {
-          orderList: [...state.orderList],
-          status: 'ADD_PRODUCT_AMOUNT'
+          orderList: updatedItems,
+          status: statusAction
         }
       );
     }
     return (
       {
         orderList: [...state.orderList],
-        status: 'CHANGE_PRODUCT_AMOUNT'
+        status: 'PRODUCT_AMOUNT_NOT_CHANGE'
       }
     );
   }
@@ -135,11 +165,11 @@ export const AuthContextProvider = (props) => {
 
   }
 
-  const addProductChandler = (action) => {
-    dispatchOrder(action);
+  const addProductChandler = (data) => {
+    dispatchOrder({type: "ADD_PRODUCT", ...data});
   }
-  const changeOrderChandler = (action) => {
-    dispatchOrder(action);
+  const changeOrderChandler = (data) => {
+    dispatchOrder({type: 'CHANGE_AMOUNT', ...data});
   }
 
   const clearOrderChandler = () => {

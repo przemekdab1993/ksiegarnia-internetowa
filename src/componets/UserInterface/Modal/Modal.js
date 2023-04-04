@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import styles from "./Modal.module.css";
 
 import Backdrop from "./Backdrop";
-import OrderCart from "../../Order/OrderCart";
 import {BooksContextProvider} from "../../../store/books-context";
 
 const Modal = (props) => {
@@ -18,7 +17,7 @@ const Modal = (props) => {
       {ReactDOM.createPortal(
         (
           <BooksContextProvider>
-            <OrderCart onHidden={props.onHidden}></OrderCart>
+              {props.children}
           </BooksContextProvider>
         ),
         document.getElementById('overlay-root')

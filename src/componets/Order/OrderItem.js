@@ -11,7 +11,7 @@ const OrderItem = (props) => {
 
     useEffect(() => {
         const changeAmountOrder = setTimeout(() => {
-            authCtx.onChangeOrder({type: 'CHANGE_AMOUNT', productId: props.productId, value: enteredAmountProduct})
+            authCtx.onChangeOrder({productId: props.productId, amount: enteredAmountProduct})
         }, 800)
 
         return () => {
@@ -27,7 +27,7 @@ const OrderItem = (props) => {
                 return prevState + 1;
             });
         }
-        else if (changeType === "down" && enteredAmountProduct > 1) {
+        else if (changeType === "down" && enteredAmountProduct > 0) {
             setEnteredAmountProduct(prevState => {
                 return prevState - 1;
             });

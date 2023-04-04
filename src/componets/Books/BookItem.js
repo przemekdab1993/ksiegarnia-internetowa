@@ -37,7 +37,7 @@ const BookItem = (props) => {
     event.preventDefault();
     const productId = event.target.dataset.productId;
 
-    authCtx.onAddProduct({type:"ADD_PRODUCT", productId: productId, amount: amountProduct});
+    authCtx.onAddProduct({productId: productId, amount: amountProduct});
     setAmountProduct(1);
   }
 

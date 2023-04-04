@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import styles from "./Menu.module.css";
 import AuthContext from "../../../store/auth-context";
 import Modal from "../Modal/Modal";
+import OrderCart from "../../Order/OrderCart";
 
 const Menu = (props) => {
 
@@ -15,15 +16,18 @@ const Menu = (props) => {
   useEffect(()=> {
 
     const changeOrderCount = setTimeout( () => {
-      let tempCount = orderList.map((item) => {
-        return item.amount;
-      });
-      if (tempCount.length <= 0) {
-        setOrderItemsCount(0);
-      }
-      else {
-        setOrderItemsCount( tempCount.reduce((prev, curr) => parseInt(prev + curr)) );
-      }
+        // zredukowane do 1 linii kodu
+      // let tempCount = orderList.map((item) => {
+      //   return item.amount;
+      // });
+      // if (tempCount.length <= 0) {
+      //   setOrderItemsCount(0);
+      // }
+      // else {
+      //   setOrderItemsCount( tempCount.reduce((prev, curr) => parseInt(prev + curr), 0) );
+      // }
+
+        setOrderItemsCount( orderList.reduce((prev, curr) => parseInt(prev + curr.amount), 0) );
 
     }, 800);
 
@@ -43,7 +47,9 @@ const Menu = (props) => {
   return (
     <React.Fragment>
       {cartModalActive && (
-        <Modal onHidden={hiddenOrderModalHandler}></Modal>
+        <Modal onHidden={hiddenOrderModalHandler}>
+            <OrderCart onHidden={hiddenOrderModalHandler} />
+        </Modal>
       )}
       <nav className={styles["top-menu"]}>
         <ul className={styles["top-menu-list"]}>
