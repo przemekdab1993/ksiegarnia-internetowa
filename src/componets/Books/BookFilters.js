@@ -15,4 +15,4 @@ const BookFilters = () => {
     );
 }
 
-export default BookFilters;
+export default React.memo(BookFilters);

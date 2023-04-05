@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 
 import styles from "./Menu.module.css";
 import AuthContext from "../../../store/auth-context";
@@ -40,9 +40,9 @@ const Menu = (props) => {
     setCartModalActive(true);
   }
 
-  const hiddenOrderModalHandler = () => {
+  const hiddenOrderModalHandler = useCallback(() => {
     setCartModalActive(false);
-  }
+  }, []);
 
   return (
     <React.Fragment>
