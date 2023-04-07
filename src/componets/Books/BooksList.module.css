@@ -5,3 +5,7 @@
     max-width: 1199px;
     margin: 25px auto;
 }
+.loading-book-list {
+    min-height: 480px;
+    padding-top: 40px;
+}

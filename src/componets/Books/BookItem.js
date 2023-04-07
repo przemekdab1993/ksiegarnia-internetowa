@@ -44,7 +44,7 @@ const BookItem = (props) => {
   return (
     <Card className={styles["book-card"]}>
       <div className={styles["book-img"]}>
-        <div className={styles["img"]} style={{backgroundImage: `url("/assets/images/books/${props.id}.jpg")`}}></div>
+        <div className={styles["img"]} style={{backgroundImage: `url("/assets/images/books/b${props.id}.jpg")`}}></div>
 
       </div>
       <h3>{props.title}</h3>
