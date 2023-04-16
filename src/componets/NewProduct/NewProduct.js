@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 import styles from "./NewProduct.module.css";
 
 import Card from "../UserInterface/Card";
+import BooksContext from "../../store/books-context";
 
 const NewProduct = (props) => {
+
+    const bookCtx = useContext(BooksContext);
 
     const [enteredFormValues, setEnteredFormValues] = useState({
         title: '',
@@ -60,6 +63,29 @@ const NewProduct = (props) => {
         event.preventDefault();
         if (formIsValid === true) {
             console.log("Udało się zwalidować i treść zostaje wysłana");
+
+            const newItem = {
+                title: enteredFormValues.title,
+                type: enteredFormValues.type,
+                author: enteredFormValues.author,
+                publisher: enteredFormValues.publisher,
+                year: +enteredFormValues.year,
+                createdAt: new Date,
+                quantity: +enteredFormValues.quantity,
+                price: +(enteredFormValues.price * 100),
+                active: true
+            }
+            bookCtx.onAddNewBook(newItem);
+            // setEnteredFormValues({
+            //     title: '',
+            //     type: 'horror',
+            //     author: '',
+            //     publisher: '',
+            //     year: 1900,
+            //     quantity: 0,
+            //     price: 0.00
+            // });
+
         } else {
             console.log("Walidacja nie przeszła");
             console.log(enteredFormValues);
