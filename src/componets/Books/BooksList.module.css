@@ -1,0 +1,11 @@
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1199px;
+    margin: 25px auto;
+}
+.loading-book-list {
+    min-height: 480px;
+    padding-top: 40px;
+}

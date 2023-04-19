@@ -1,0 +1,22 @@
+.link-clear {
+    color: #000;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+}
+ul.footer-menu {
+    list-style-type: none;
+    padding: 0px;
+    margin: 10px 0px;
+}
+ul.footer-menu li {
+    display: inline-block;
+    padding: 0px 10px;
+    border-right: 1px solid #8080ff;
+}
+ul.footer-menu li:last-child {
+    border: none;
+}
